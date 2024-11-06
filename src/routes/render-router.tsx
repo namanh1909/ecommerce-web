@@ -1,32 +1,49 @@
 import { FC, lazy } from 'react';
 
 import { Navigate, useRoutes } from 'react-router-dom';
-
-import { routeList } from '@/data/constant/navs';
 import LayoutComponent from '@/layout';
+import useAuth from '@/features/auth/hooks/useAuth';
+import { AuthenticationPage } from '@/pages';
 
 const NotFound = lazy(() => import('@/pages/not-found'));
 
-const routes = [
-  {
-    path: '/',
-    element: <LayoutComponent />,
-    children: [
-      {
-        path: '',
-        element: <Navigate to="home" />,
-      },
-      ...routeList,
-      {
-        path: '*',
-        element: <NotFound />,
-      },
-    ],
-  },
-];
-
 const RenderRouter: FC = () => {
-  const element = useRoutes(routes);
+  const { token } = useAuth();
+
+  const authRoutes = [
+    {
+      path: '/auth',
+      element: <AuthenticationPage />,
+    },
+    {
+      path: '',
+      element: <Navigate to="auth" />,
+    },
+    {
+      path: '*',
+      element: <Navigate to="auth" />,
+    },
+
+  ];
+
+  const routes = [
+    {
+      path: '/',
+      element: <LayoutComponent />,
+      children: [
+        {
+          path: '',
+          element: <Navigate to="home" />,
+        },
+        {
+          path: '*',
+          element: <NotFound />,
+        },
+      ],
+    },
+  ];
+
+  const element = useRoutes(!token ? routes : authRoutes);
 
   return element;
 };
