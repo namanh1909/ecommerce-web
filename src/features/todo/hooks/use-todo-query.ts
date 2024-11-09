@@ -3,7 +3,7 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { toast } from 'react-hot-toast';
 
 import todoApi from '../services/todo.api';
-import { ResponseData, TodoData } from '../services/types';
+import { TodoData } from '../services/types';
 import { QueryOptions } from '@/ts/types';
 
 const todos = createQueryKeys('todos', {
@@ -17,19 +17,16 @@ const todos = createQueryKeys('todos', {
   }),
 });
 
-export const useTodoListQuery = <T = ResponseData>(
-  options: QueryOptions<T, ResponseData> = {},
-) => {
+export const useTodoListQuery = ( options: QueryOptions<ApiResponse<TodoData>> = {},) => {
   return useQuery({
     ...todos.list(),
-    keepPreviousData: true,
     ...options,
   });
 };
 
 export const useTodoDetailQuery = (
   id: string,
-  options: QueryOptions<TodoData> = {},
+  options: QueryOptions<ApiResponse<TodoData>> = {},
 ) => {
   return useQuery({
     ...todos.detail(id),

@@ -1,9 +1,9 @@
 import { FC, lazy } from 'react';
 
-import { Navigate, useRoutes } from 'react-router-dom';
+import { Navigate, Outlet, useRoutes } from 'react-router-dom';
 import LayoutComponent from '@/layout';
 import useAuth from '@/features/auth/hooks/useAuth';
-import { AuthenticationPage } from '@/pages';
+import { AuthenticationPage, Dashboard, Orders, Products, Users } from '@/pages';
 
 const NotFound = lazy(() => import('@/pages/not-found'));
 
@@ -12,7 +12,7 @@ const RenderRouter: FC = () => {
 
   const authRoutes = [
     {
-      path: '/auth',
+      path: '/',
       element: <AuthenticationPage />,
     },
     {
@@ -23,27 +23,70 @@ const RenderRouter: FC = () => {
       path: '*',
       element: <Navigate to="auth" />,
     },
-
   ];
 
   const routes = [
     {
       path: '/',
-      element: <LayoutComponent />,
+      element: <Outlet />,
       children: [
         {
-          path: '',
-          element: <Navigate to="home" />,
+          path: '/',
+          element: (
+            <LayoutComponent>
+              <Dashboard />
+            </LayoutComponent>
+          ),
+        },
+        {
+          path: '/dashboard',
+          element: (
+            <LayoutComponent>
+              <Dashboard />
+            </LayoutComponent>
+          ),
+        },
+        {
+          path: '/users',
+          element: (
+            <LayoutComponent>
+              <Users />
+            </LayoutComponent>
+          ),
+        },
+        {
+          path: '/products',
+          element: (
+            <LayoutComponent>
+              <Products />
+            </LayoutComponent>
+          ),
+        },
+        {
+          path: '/orders',
+          element: (
+            <LayoutComponent>
+              <Orders />
+            </LayoutComponent>
+          ),
+        },
+        {
+          path: '/settings',
+          element: (
+            <LayoutComponent>
+              <Orders />
+            </LayoutComponent>
+          ),
         },
         {
           path: '*',
-          element: <NotFound />,
+          element: <Navigate to="/" />,
         },
       ],
     },
   ];
 
-  const element = useRoutes(!token ? routes : authRoutes);
+  const element = useRoutes(token ? routes : authRoutes);
 
   return element;
 };

@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
-import axios, { AxiosError } from 'axios';
+import axios, { AxiosError, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
+import { toast } from 'react-hot-toast';
 
 import { LOGIN_PATH } from '@/data';
 
@@ -10,41 +11,96 @@ const axiosClient = axios.create({
     'Content-Type': 'application/json',
   },
 });
+
+let isRefreshing = false;
+let failedQueue: { resolve: (token: string | null) => void; reject: (error: any) => void }[] = [];
+
+const processQueue = (error: any, token: string | null = null) => {
+  failedQueue.forEach(prom => {
+    if (error) {
+      prom.reject(error);
+    } else {
+      prom.resolve(token);
+    }
+  });
+
+  failedQueue = [];
+};
+
 // Interceptors
 // Add a request interceptor
 axiosClient.interceptors.request.use(
-  function (config) {
+  function (config: AxiosRequestConfig) {
+    // Cast config to InternalAxiosRequestConfig
+    const internalConfig = config as InternalAxiosRequestConfig;
     // Do something before request is sent
     const token = localStorage.getItem('token');
-    if (token) {
-      config.headers['Authorization'] = 'Bearer ' + token;
+    if (token && internalConfig.headers) {
+      internalConfig.headers['Authorization'] = 'Bearer ' + token;
     }
 
-    return config;
+    return internalConfig;
   },
-  function (error) {
+  function (error: AxiosError) {
     // Do something with request error
+    toast.error('Request error: ' + error.message);
     return Promise.reject(error);
   },
 );
 
 // Add a response interceptor
 axiosClient.interceptors.response.use(
-  function (response) {
+  function (response: AxiosResponse) {
     // Any status code that lie within the range of 2xx cause this function to trigger
-    // Do something with response data
-    return response.data;
+    // Return the response data as is
+    return response;
   },
   function (error: AxiosError) {
-    // Any status codes that falls outside the range of 2xx cause this function to trigger
-    // Do something with response error
-    if (error.response?.status === 401) {
-      // clear token ...
-      localStorage.removeItem('token');
-      window.location.replace(LOGIN_PATH);
+    const originalRequest = error.config as AxiosRequestConfig & { _retry?: boolean };
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      if (isRefreshing) {
+        return new Promise<string | null>((resolve, reject) => {
+          failedQueue.push({ resolve, reject });
+        }).then(token => {
+          if (originalRequest.headers) {
+            originalRequest.headers['Authorization'] = 'Bearer ' + token;
+          }
+          return axiosClient(originalRequest);
+        }).catch(err => {
+          return Promise.reject(err);
+        });
+      }
+
+      originalRequest._retry = true;
+      isRefreshing = true;
+
+      const refreshToken = localStorage.getItem('refreshToken');
+      return new Promise((resolve, reject) => {
+        axios.post(`${import.meta.env.VITE_API_URL}/auth/refresh`, { token: refreshToken })
+          .then(({ data }) => {
+            localStorage.setItem('token', data.token);
+            axiosClient.defaults.headers.common['Authorization'] = 'Bearer ' + data.token;
+            processQueue(null, data.token);
+            resolve(axiosClient(originalRequest));
+          })
+          .catch((err) => {
+            processQueue(err, null);
+            localStorage.removeItem('token');
+            localStorage.removeItem('refreshToken');
+            window.location.replace(LOGIN_PATH);
+            reject(err);
+          })
+          .finally(() => { isRefreshing = false; });
+      });
     }
 
-    return Promise.reject(error);
+    toast.error('Response error: ' + error.message);
+    return Promise.reject({
+      success: false,
+      message: error.message,
+      status: error.response?.status,
+      statusText: error.response?.statusText,
+    });
   },
 );
 

@@ -14,6 +14,7 @@ export type QueryOptions<T, TQueryData = unknown, TError = unknown> = Omit<
   | 'refetchOnReconnect'
   | 'refetchOnWindowFocus'
   | 'useErrorBoundary'
+  | 'keepPreviousData'
 >;
 
 export type ValueOf<T> = T[keyof T];

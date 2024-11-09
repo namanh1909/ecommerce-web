@@ -14,7 +14,7 @@ const AuthenticationPage = () => {
             'absolute right-4 top-4 md:right-8 md:top-8'
           )}
         >
-          Request to create an account
+          Request to create an account``
         </Link>
         <div className="relative md:h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex">
           {/* <div className="absolute inset-0 bg-zinc-900 login-background" />

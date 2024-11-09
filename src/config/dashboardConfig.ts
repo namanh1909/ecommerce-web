@@ -23,18 +23,23 @@ export const dashboardConfig: DashboardConfig = {
       icon: 'dashboard',
     },
     {
+      title: 'Users',
+      href: '/users',
+      icon: 'user',
+    },
+    {
       title: 'Products',
-      href: '/dashboard/product',
+      href: '/products',
       icon: 'product',
     },
     {
       title: 'Orders',
-      href: '/dashboard/order',
+      href: '/orders',
       icon: 'order',
     },
     {
       title: 'Settings',
-      href: '/dashboard/setting',
+      href: '/settings',
       icon: 'settings',
     },
   ],

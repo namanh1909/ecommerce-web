@@ -4,26 +4,29 @@ import { useNavigate } from 'react-router-dom';
 const useAuth = () => {
   const [token, setToken] = useState<string | null>(null);
   const navigate = useNavigate();
+  const storedToken = localStorage.getItem('token');
 
   useEffect(() => {
-    const storedToken = localStorage.getItem('token');
-    if (storedToken) {
+    console.log('storedToken', storedToken)
+    if (storedToken && storedToken?.length > 0 && storedToken != 'undefined') {
       setToken(storedToken);
     } else {
-      navigate('/auth');
+      navigate('/');
     }
-  }, [navigate]);
+  }, [navigate, storedToken]);
 
-  const login = (newToken: string) => {
+  const login = ({ newToken, refreshToken }: { newToken: string; refreshToken: string }) => {
     localStorage.setItem('token', newToken);
+    localStorage.setItem('refreshToken', refreshToken);
     setToken(newToken);
     navigate('/');
   };
 
   const logout = () => {
-    localStorage.removeItem('token');
+    localStorage.clear();
     setToken(null);
-    navigate('/login');
+    navigate('/');
+    window.location.reload();
   };
 
   return {

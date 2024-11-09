@@ -6,10 +6,6 @@ export type TodoData = {
   updatedAt: string;
 };
 
-export type ResponseData = {
-  code: number;
-  data: TodoData[];
-};
 
 export type TodoDataMutation = Partial<
   Pick<TodoData, 'isComplete' | 'todoName'>

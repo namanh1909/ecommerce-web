@@ -2,7 +2,10 @@ import { lazy } from 'react';
 
 const Home = lazy(() => import('@/pages/home'));
 const Users = lazy(() => import('@/pages/users'));
-const Todos = lazy(() => import('@/pages/todos'));
 const AuthenticationPage = lazy(() => import('@/pages/auth'))
+const Dashboard = lazy(() => import('@/pages/dashboard'))
+const Products = lazy(() => import('@/pages/products'))
+const Orders = lazy(() => import('@/pages/orders'))
 
-export { Home, Users, Todos, AuthenticationPage };
+
+export { Home, Users, Dashboard, AuthenticationPage, Products, Orders };
