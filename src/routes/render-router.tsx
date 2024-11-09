@@ -3,7 +3,13 @@ import { FC, lazy } from 'react';
 import { Navigate, Outlet, useRoutes } from 'react-router-dom';
 import LayoutComponent from '@/layout';
 import useAuth from '@/features/auth/hooks/useAuth';
-import { AuthenticationPage, Dashboard, Orders, Products, Users } from '@/pages';
+import {
+  AuthenticationPage,
+  Dashboard,
+  Orders,
+  Products,
+  Users,
+} from '@/pages';
 
 const NotFound = lazy(() => import('@/pages/not-found'));
 
@@ -28,54 +34,46 @@ const RenderRouter: FC = () => {
   const routes = [
     {
       path: '/',
-      element: <Outlet />,
+      element: (
+        <LayoutComponent>
+          <Outlet />
+        </LayoutComponent>
+      ),
       children: [
         {
           path: '/',
           element: (
-            <LayoutComponent>
               <Dashboard />
-            </LayoutComponent>
           ),
         },
         {
           path: '/dashboard',
           element: (
-            <LayoutComponent>
               <Dashboard />
-            </LayoutComponent>
           ),
         },
         {
           path: '/users',
           element: (
-            <LayoutComponent>
               <Users />
-            </LayoutComponent>
           ),
         },
         {
           path: '/products',
           element: (
-            <LayoutComponent>
               <Products />
-            </LayoutComponent>
           ),
         },
         {
           path: '/orders',
           element: (
-            <LayoutComponent>
               <Orders />
-            </LayoutComponent>
           ),
         },
         {
-          path: '/settings',
+          path: '/orders',
           element: (
-            <LayoutComponent>
               <Orders />
-            </LayoutComponent>
           ),
         },
         {
