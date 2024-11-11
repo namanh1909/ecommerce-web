@@ -53,7 +53,9 @@ axiosClient.interceptors.response.use(
   function (response: AxiosResponse) {
     // Any status code that lie within the range of 2xx cause this function to trigger
     // Return the response data as is
-    return response;
+
+    // Return the modified response
+    return response?.data;
   },
   function (error: AxiosError) {
     const originalRequest = error.config as AxiosRequestConfig & { _retry?: boolean };

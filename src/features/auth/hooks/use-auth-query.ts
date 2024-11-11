@@ -1,19 +1,36 @@
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'react-hot-toast';
 import authApi from '../services/auth.api';
-import useAuth from './useAuth';
+import { useNavigate } from 'react-router-dom';
 
-export const useLoginMutation = () => {
-  const { login } = useAuth();
-
-  return useMutation({
+export const useAuthQuery = () => {
+  const navigate = useNavigate();
+  const loginMutation = useMutation({
     mutationFn: authApi.login,
     onSuccess: (response) => {
-      login({
-        newToken: response.data.data.tokens?.access?.token,
-        refreshToken: response.data.data.tokens?.refresh?.token,
-      });
+
+      console.log('response', response), 
+      localStorage.setItem('token', response?.data.tokens?.access?.token);
+      localStorage.setItem(
+        'refreshToken',
+        response.data.tokens?.refresh?.token,
+      );
+      navigate('/');
       toast.success('Login successful');
     },
   });
+
+  const logoutMutation = useMutation({
+    mutationFn: () => {
+      const refreshToken = localStorage.getItem('refreshToken');
+      return authApi.logout({ refreshToken: refreshToken as string });
+    },
+    onSuccess: () => {
+      localStorage.clear();
+      navigate('/');
+      toast.success('Logout successful');
+    },
+  });
+
+  return { loginMutation, logoutMutation };
 };

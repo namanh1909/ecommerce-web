@@ -1,8 +1,7 @@
 import { FC, lazy } from 'react';
 
-import { Navigate, Outlet, useRoutes } from 'react-router-dom';
+import { Navigate, Outlet, useLocation, useRoutes } from 'react-router-dom';
 import LayoutComponent from '@/layout';
-import useAuth from '@/features/auth/hooks/useAuth';
 import {
   AuthenticationPage,
   Dashboard,
@@ -10,71 +9,51 @@ import {
   Products,
   Users,
 } from '@/pages';
+import ProtectedRoute from './protectedRoute';
 
 const NotFound = lazy(() => import('@/pages/not-found'));
 
 const RenderRouter: FC = () => {
-  const { token } = useAuth();
+  const storedToken = localStorage.getItem('token');
 
-  const authRoutes = [
-    {
-      path: '/',
-      element: <AuthenticationPage />,
-    },
-    {
-      path: '',
-      element: <Navigate to="auth" />,
-    },
-    {
-      path: '*',
-      element: <Navigate to="auth" />,
-    },
-  ];
+  const conditionAuth = Boolean(
+    storedToken && storedToken.length > 0 && storedToken !== 'undefined',
+  );
 
   const routes = [
     {
       path: '/',
       element: (
-        <LayoutComponent>
-          <Outlet />
-        </LayoutComponent>
+        <ProtectedRoute isAuthenticated={conditionAuth}>
+          <LayoutComponent>
+            <Outlet />
+          </LayoutComponent>
+        </ProtectedRoute>
       ),
       children: [
         {
           path: '/',
-          element: (
-              <Dashboard />
-          ),
+          element: <Dashboard />,
         },
         {
           path: '/dashboard',
-          element: (
-              <Dashboard />
-          ),
+          element: <Dashboard />,
         },
         {
           path: '/users',
-          element: (
-              <Users />
-          ),
+          element: <Users />,
         },
         {
           path: '/products',
-          element: (
-              <Products />
-          ),
+          element: <Products />,
         },
         {
           path: '/orders',
-          element: (
-              <Orders />
-          ),
+          element: <Orders />,
         },
         {
           path: '/orders',
-          element: (
-              <Orders />
-          ),
+          element: <Orders />,
         },
         {
           path: '*',
@@ -84,7 +63,7 @@ const RenderRouter: FC = () => {
     },
   ];
 
-  const element = useRoutes(token ? routes : authRoutes);
+  const element = useRoutes(routes);
 
   return element;
 };

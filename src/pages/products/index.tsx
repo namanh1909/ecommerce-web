@@ -1,15 +1,13 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ListPlus, GalleryThumbnails } from 'lucide-react';
 
-import {  columns } from './columns';
-import DataTable from './data-table';
+import { columns } from './components/columns';
+import DataTable from './components/data-table';
 import { Product } from '@/features/products/services/types';
+import UpsertProductModal from './components/upsertModal';
 
-
-
-const Products =  () => {
+const Products = () => {
   const data = [
     {
       id: '1',
@@ -212,9 +210,7 @@ const Products =  () => {
           <div className="flex items-center justify-between">
             <h2 className="text-3xl font-bold tracking-tight">Products</h2>
             <div className="flex items-center">
-              <Button>
-                <ListPlus className="mr-2 h-4 w-4" /> Add New Product
-              </Button>
+              <UpsertProductModal />
             </div>
           </div>
           <DataTable columns={columns} data={data} />

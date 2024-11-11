@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+
 
 import {
   Card,
@@ -9,20 +8,11 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import useAuth from '@/features/auth/hooks/useAuth';
 import Overview from '@/components/dashboard/Overview/Overview';
 import RecentProducts from '@/components/dashboard/RecentProducts/RecentProducts';
 import RecentSales from '@/components/dashboard/RecentSales/RecentSales';
 
 const Dashboard = () => {
-  const { token } = useAuth();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!token) {
-      navigate('/');
-    }
-  }, [token, navigate]);
 
   return (
     <>

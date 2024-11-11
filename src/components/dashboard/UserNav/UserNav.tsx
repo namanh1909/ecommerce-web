@@ -13,10 +13,10 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Link } from 'react-router-dom';
-import useAuth from '@/features/auth/hooks/useAuth';
-
+import { useAuthQuery } from '@/features/auth/hooks/use-auth-query';
 const UserNav = () => {
-  const { logout } = useAuth();
+  const { logoutMutation } = useAuthQuery();
+  
 
   return (
     <DropdownMenu>
@@ -53,7 +53,7 @@ const UserNav = () => {
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="cursor-pointer" onClick={logout}>
+        <DropdownMenuItem className="cursor-pointer" onClick={() => logoutMutation.mutate()}>
           <LogOut className="mr-2 h-4 w-4" />
           <span>Log out</span>
         </DropdownMenuItem>

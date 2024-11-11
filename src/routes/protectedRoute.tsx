@@ -1,14 +1,28 @@
-import React from 'react'
+import { AuthenticationPage } from '@/pages';
+import React, { FC, ReactNode } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 
-const ProtectedRoute = ({children}: {children: React.ReactNode}) => {
-    const storedToken = localStorage.getItem('token');
-    let location = useLocation();
+interface ProtectedRouteProps {
+  isAuthenticated: boolean;
+  children: ReactNode; // Add this line to accept children
+}
 
-    if (storedToken && storedToken?.length > 0 && storedToken != 'undefined') {
-        return children
-    }
-    return <Navigate to="/login" state={{ from: location }} replace />
+const ProtectedRoute: FC<ProtectedRouteProps> = ({
+  isAuthenticated,
+  children,
+}) => {
+  const location = useLocation();
+
+  if (!isAuthenticated) {
+    return <AuthenticationPage />; // Render children if not authenticated
+  }
+
+  if (isAuthenticated && location.pathname === '/auth') {
+    return <Navigate to="/" />;
+  }
+  
+  return <>{children}</>; // Render children if authenticated
+
 };
 
 export default ProtectedRoute;

@@ -14,7 +14,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { loginRequest, loginSchema } from '@/features/auth/schemas';
 import ErrorMessage from '@/components/ui/error';
-import { useLoginMutation } from '@/features/auth/hooks/use-auth-query';
+import { useAuthQuery } from '@/features/auth/hooks/use-auth-query';
 
 const Login = () => {
   const {
@@ -29,7 +29,7 @@ const Login = () => {
     },
   });
 
-  const loginMutation = useLoginMutation();
+  const {loginMutation} = useAuthQuery();
 
   const onSubmit = (data: loginRequest) => {
     loginMutation.mutate(data);
