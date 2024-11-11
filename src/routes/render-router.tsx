@@ -1,9 +1,8 @@
-import { FC, lazy } from 'react';
+import { FC } from 'react';
 
-import { Navigate, Outlet, useLocation, useRoutes } from 'react-router-dom';
+import { Navigate, Outlet, useRoutes } from 'react-router-dom';
 import LayoutComponent from '@/layout';
 import {
-  AuthenticationPage,
   Brands,
   Dashboard,
   Orders,
@@ -11,8 +10,6 @@ import {
   Users,
 } from '@/pages';
 import ProtectedRoute from './protectedRoute';
-
-const NotFound = lazy(() => import('@/pages/not-found'));
 
 const RenderRouter: FC = () => {
   const storedToken = localStorage.getItem('token');

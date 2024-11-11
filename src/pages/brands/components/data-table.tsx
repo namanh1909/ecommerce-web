@@ -1,6 +1,4 @@
-'use client';
 
-//import * as React from 'react';
 import { useState } from 'react';
 import {
   ColumnDef,
@@ -35,7 +33,7 @@ import { DataTablePagination } from '@/components/common';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
-  data: TData[];
+  data: TData[] ;
 }
 
 const DataTable = <TData, TValue>({
@@ -70,10 +68,10 @@ const DataTable = <TData, TValue>({
     <>
       <div className="flex items-center py-4">
         <Input
-          placeholder="Filter product name..."
-          value={(table.getColumn('name')?.getFilterValue() as string) ?? ''}
+          placeholder="Filter brand name..."
+          value={(table.getColumn('brandName')?.getFilterValue() as string) ?? ''}
           onChange={(event) =>
-            table.getColumn('name')?.setFilterValue(event.target.value)
+            table.getColumn('brandName')?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />

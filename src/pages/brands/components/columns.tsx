@@ -13,12 +13,11 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import DataTableColumnHeader from '@/components/common/DataTableColumnHeader/DataTableColumnHeader';
-import { Product } from '@/features/products/services/types';
+import { Brand } from '@/features/brands/services/type';
 
 // This type is used to define the shape of our data.
 
-
-export const columns: ColumnDef<Product>[] = [
+export const columns: ColumnDef<Brand>[] = [
   {
     id: 'select',
     header: ({ table }) => (
@@ -59,38 +58,12 @@ export const columns: ColumnDef<Product>[] = [
     },
   },
   {
-    accessorKey: 'name',
-    header: 'Product Name',
-  },
-  {
-    accessorKey: 'type',
-    header: 'Type',
-  },
-  {
-    accessorKey: 'sku',
-    header: 'SKU',
+    accessorKey: 'brandName',
+    header: 'Brand Name',
   },
   {
     accessorKey: 'qty',
-    header: 'Quantity',
-  },
-  {
-    accessorKey: 'status',
-    header: 'Status',
-    cell: ({ row }) => {
-      const status: string = row.getValue('status');
-      return (
-        <div
-          className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-            status === 'Enabled'
-              ? 'bg-green-100 text-green-800'
-              : 'bg-red-100 text-red-800'
-          }`}
-        >
-          {status}
-        </div>
-      );
-    },
+    header: 'Quantity product',
   },
   {
     accessorKey: 'description',
@@ -100,29 +73,9 @@ export const columns: ColumnDef<Product>[] = [
     ),
   },
   {
-    accessorKey: 'price',
-    //header: () => <div className="text-right">Price</div>,
-    header: ({ column }) => (
-      <DataTableColumnHeader
-        className="justify-end"
-        column={column}
-        title="Price"
-      />
-    ),
-    cell: ({ row }) => {
-      const price = parseFloat(row.getValue('price'));
-      const formatted = new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'USD',
-      }).format(price);
-
-      return <div className="text-right font-medium">{formatted}</div>;
-    },
-  },
-  {
     id: 'actions',
     cell: ({ row }) => {
-      const product = row.original;
+      const brand = row.original;
 
       return (
         <DropdownMenu>
@@ -143,7 +96,7 @@ export const columns: ColumnDef<Product>[] = [
             <DropdownMenuSeparator />
             <DropdownMenuItem
               className="cursor-pointer"
-              onClick={() => navigator.clipboard.writeText(product.id)}
+              onClick={() => navigator.clipboard.writeText(brand._id)}
             >
               Copy Product ID
             </DropdownMenuItem>

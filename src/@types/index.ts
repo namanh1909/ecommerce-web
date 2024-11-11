@@ -1,5 +1,5 @@
-type ApiResponse<T> = Promise<{ success: boolean; data: T; status: number; statusText: string }>;
-type ApiMessageResponse = Promise<{ success: boolean; message: string; status: number; statusText: string }>;
+type ApiResponse<T> = { success: boolean; data: T; status: number; statusText: string };
+type ApiMessageResponse = { success: boolean; message: string; status: number; statusText: string };
 
  type Product = {
     id: string;

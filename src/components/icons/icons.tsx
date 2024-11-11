@@ -26,7 +26,8 @@ import {
   Twitter,
   User,
   X,
-  Sticker
+  Sticker,
+  FileImage
 } from 'lucide-react';
 
 export type Icon = typeof X;
@@ -46,5 +47,6 @@ export const Icons = {
   user: User,
   arrowRight: ArrowRight,
   check: Check,
-  brand: Sticker
+  brand: Sticker,
+  fileImage: FileImage
 };

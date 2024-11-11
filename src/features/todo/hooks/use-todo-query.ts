@@ -17,7 +17,9 @@ const todos = createQueryKeys('todos', {
   }),
 });
 
-export const useTodoListQuery = ( options: QueryOptions<ApiResponse<TodoData>> = {},) => {
+export const useTodoListQuery = (
+  options: QueryOptions<ApiResponse<TodoData>> = {},
+) => {
   return useQuery({
     ...todos.list(),
     ...options,

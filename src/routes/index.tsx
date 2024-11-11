@@ -1,17 +1,23 @@
 import { Suspense } from 'react';
 
-import { BrowserRouter, useLocation } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 
 import RenderRouter from './render-router';
 
+import '@radix-ui/themes/styles.css';
+import { Theme } from '@radix-ui/themes';
+import Spinner from '@/components/ui/spinner';
+
 const Routes = () => {
   return (
-    <Suspense fallback="loading...">
+    <Suspense fallback={<Spinner loading={true} />}>
       <BrowserRouter>
-        <RenderRouter />
+        <Theme>
+          <RenderRouter />
+        </Theme>
       </BrowserRouter>
     </Suspense>
-  );
+  )
 };
 
 export default Routes;
