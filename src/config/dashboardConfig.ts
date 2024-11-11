@@ -22,10 +22,11 @@ export const dashboardConfig: DashboardConfig = {
       href: '/dashboard',
       icon: 'dashboard',
     },
+ 
     {
-      title: 'Users',
-      href: '/users',
-      icon: 'user',
+      title: 'Brands',
+      href: '/brands',
+      icon: 'brand',
     },
     {
       title: 'Products',
@@ -36,6 +37,11 @@ export const dashboardConfig: DashboardConfig = {
       title: 'Orders',
       href: '/orders',
       icon: 'order',
+    },
+    {
+      title: 'Users',
+      href: '/users',
+      icon: 'user',
     },
     {
       title: 'Settings',

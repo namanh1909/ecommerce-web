@@ -4,6 +4,7 @@ import { Navigate, Outlet, useLocation, useRoutes } from 'react-router-dom';
 import LayoutComponent from '@/layout';
 import {
   AuthenticationPage,
+  Brands,
   Dashboard,
   Orders,
   Products,
@@ -52,8 +53,8 @@ const RenderRouter: FC = () => {
           element: <Orders />,
         },
         {
-          path: '/orders',
-          element: <Orders />,
+          path: '/brands',
+          element: <Brands />,
         },
         {
           path: '*',

@@ -20,9 +20,8 @@ const ProtectedRoute: FC<ProtectedRouteProps> = ({
   if (isAuthenticated && location.pathname === '/auth') {
     return <Navigate to="/" />;
   }
-  
-  return <>{children}</>; // Render children if authenticated
 
+  return <>{children}</>; // Render children if authenticated
 };
 
 export default ProtectedRoute;

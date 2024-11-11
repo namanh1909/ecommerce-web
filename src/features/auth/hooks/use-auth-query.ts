@@ -8,13 +8,12 @@ export const useAuthQuery = () => {
   const loginMutation = useMutation({
     mutationFn: authApi.login,
     onSuccess: (response) => {
-
-      console.log('response', response), 
       localStorage.setItem('token', response?.data.tokens?.access?.token);
       localStorage.setItem(
         'refreshToken',
         response.data.tokens?.refresh?.token,
       );
+
       navigate('/');
       toast.success('Login successful');
     },

@@ -2,7 +2,7 @@ import { columns } from './components/columns';
 import DataTable from './components/data-table';
 import UpsertProductModal from './components/upsertModal';
 
-const Orders = () => {
+const Brands = () => {
   const data = [
     {
       id: '1',
@@ -203,7 +203,7 @@ const Orders = () => {
       <div className="flex-col md:flex">
         <div className="flex-1 space-y-4 p-8 pt-6">
           <div className="flex items-center justify-between">
-            <h2 className="text-3xl font-bold tracking-tight">Orders</h2>
+            <h2 className="text-3xl font-bold tracking-tight">Brands</h2>
             <div className="flex items-center">
               <UpsertProductModal />
             </div>
@@ -215,4 +215,4 @@ const Orders = () => {
   );
 };
 
-export default Orders;
+export default Brands;
