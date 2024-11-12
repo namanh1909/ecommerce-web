@@ -4,10 +4,14 @@ import DataTable from './components/data-table';
 import UpsertProductModal from './components/upsert-modal';
 import { FC } from 'react';
 import Spinner from '@/components/ui/spinner';
+import { Button } from '@/components/ui';
+import { ListPlus } from 'lucide-react';
+import { useModalStore } from '@/hooks';
 
-const Brands: FC =  () => {
+const Brands: FC = () => {
   const { data: brands, isLoading: loadingFetch } = useBrandsListQuery();
-  
+  const open = useModalStore((state) => state.open);
+
   return (
     <Spinner loading={loadingFetch}>
       <div className="flex-col md:flex">
@@ -15,6 +19,9 @@ const Brands: FC =  () => {
           <div className="flex items-center justify-between">
             <h2 className="text-3xl font-bold tracking-tight">Brands</h2>
             <div className="flex items-center">
+              <Button onClick={() => open()}>
+                <ListPlus /> Add New Brand
+              </Button>
               <UpsertProductModal />
             </div>
           </div>

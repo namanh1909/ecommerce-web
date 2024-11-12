@@ -1,6 +1,4 @@
-"use client"
-
-import * as React from "react"
+import * as React from 'react';
 
 export interface ErrorMessageProps {
   message: string;
@@ -8,7 +6,7 @@ export interface ErrorMessageProps {
 
 const ErrorMessage: React.FC<ErrorMessageProps> = ({ message }) => {
   return (
-      <span className="block sm:inline text-red-500 text-xs">{message}</span>
+    <span className="block sm:inline text-red-500 text-xs">{message}</span>
   );
 };
 

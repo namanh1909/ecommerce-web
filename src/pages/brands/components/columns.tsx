@@ -14,6 +14,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import DataTableColumnHeader from '@/components/common/DataTableColumnHeader/DataTableColumnHeader';
 import { Brand } from '@/features/brands/services/type';
+import { useModalStore } from '@/hooks';
 
 // This type is used to define the shape of our data.
 
@@ -39,11 +40,11 @@ export const columns: ColumnDef<Brand>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: 'thumbnail',
+    accessorKey: 'imageURL',
     header: 'Thumbnail',
     cell: ({ row }) => {
-      const thumbnail: string = row.getValue('thumbnail');
-
+      const thumbnail: string = row.getValue('imageURL');
+      console.log('thumbnail', thumbnail);
       return (
         <div className="flex items-center">
           <img
@@ -76,6 +77,7 @@ export const columns: ColumnDef<Brand>[] = [
     id: 'actions',
     cell: ({ row }) => {
       const brand = row.original;
+      const open = useModalStore((state) => state.open);
 
       return (
         <DropdownMenu>
@@ -86,7 +88,10 @@ export const columns: ColumnDef<Brand>[] = [
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuItem className="cursor-pointer">
+            <DropdownMenuItem
+              className="cursor-pointer"
+              onClick={() => open({ params: brand })}
+            >
               <Edit className="mr-2 h-4 w-4" /> Edit
             </DropdownMenuItem>
             <DropdownMenuItem className="cursor-pointer">
@@ -94,12 +99,6 @@ export const columns: ColumnDef<Brand>[] = [
               Delete
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem
-              className="cursor-pointer"
-              onClick={() => navigator.clipboard.writeText(brand._id)}
-            >
-              Copy Product ID
-            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );

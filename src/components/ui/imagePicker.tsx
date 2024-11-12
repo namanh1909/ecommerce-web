@@ -32,12 +32,8 @@ const ImagePicker: React.FC<ImagePickerProps> = ({ control, name }) => {
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               const file = event.target.files?.[0];
               if (file) {
-                const reader = new FileReader();
-                reader.onloadend = () => {
-                  const base64String = reader.result?.toString().split(',')[1];
-                  onChange(base64String || null);
-                };
-                reader.readAsDataURL(file);
+                console.log(file);
+                onChange(file);
               }
             }}
             ref={fileInputRef}
@@ -46,7 +42,7 @@ const ImagePicker: React.FC<ImagePickerProps> = ({ control, name }) => {
           {value && (
             <img
               onClick={handleIconClick}
-              src={`data:image/png;base64,${value}`}
+              src={typeof value === 'string' ? value : URL.createObjectURL(value)}
               alt="Preview"
             />
           )}

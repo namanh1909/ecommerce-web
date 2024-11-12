@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import {
   ColumnDef,
@@ -33,7 +32,7 @@ import { DataTablePagination } from '@/components/common';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
-  data: TData[] ;
+  data: TData[];
 }
 
 const DataTable = <TData, TValue>({
@@ -69,7 +68,9 @@ const DataTable = <TData, TValue>({
       <div className="flex items-center py-4">
         <Input
           placeholder="Filter brand name..."
-          value={(table.getColumn('brandName')?.getFilterValue() as string) ?? ''}
+          value={
+            (table.getColumn('brandName')?.getFilterValue() as string) ?? ''
+          }
           onChange={(event) =>
             table.getColumn('brandName')?.setFilterValue(event.target.value)
           }
@@ -117,7 +118,7 @@ const DataTable = <TData, TValue>({
                         ? null
                         : flexRender(
                             header.column.columnDef.header,
-                            header.getContext()
+                            header.getContext(),
                           )}
                     </TableHead>
                   );
@@ -136,7 +137,7 @@ const DataTable = <TData, TValue>({
                     <TableCell className="p-2" key={cell.id}>
                       {flexRender(
                         cell.column.columnDef.cell,
-                        cell.getContext()
+                        cell.getContext(),
                       )}
                     </TableCell>
                   ))}
