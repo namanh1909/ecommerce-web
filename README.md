@@ -1,20 +1,9 @@
-# Boilerplate and Starter for React JS 18+, Material-UI, Tailwind CSS v3.3 and Typescript
-
-<p align="center">
-</p>
-
-🚀🚀🚀 Boilerplate and Starter for React.js, Material-UI, Tailwind CSS and TypeScript ⚡️ Made with developer experience first: React.js, TypeScript, Axios, ESLint, Prettier, Husky, Lint-Staged, VSCode, PostCSS, Tailwind CSS.
-
-Clone this project and use it to create your own [React.js](https://nextjs.org) project.
-
-### Features
-
+### Technologies
 - ⚡ [React.js](https://react.dev/)
-- ⚡ [Material-UI](https://mui.com/)
 - 🔥 Type checking [TypeScript](https://www.typescriptlang.org)
 - 💎 Integrate with [Tailwind CSS](https://tailwindcss.com)
 - ✅ Strict Mode for TypeScript and React 18
-- 📏 Linter with [ESLint](https://eslint.org) (default NextJS, NextJS Core Web Vitals, Tailwind CSS and Airbnb configuration)
+- 📏 Linter with [ESLint](https://eslint.org) 
 - 💖 Code Formatter with [Prettier](https://prettier.io)
 - 🦊 Husky for Git Hooks
 - 🚫 Lint-staged for running linters on Git staged files
@@ -63,12 +52,6 @@ Open http://localhost:5173 with your favorite browser to see your project.
 └── tsconfig.json                   # TypeScript configuration
 ```
 
-### Customization
-
-- `src/index.css`: your CSS file using Tailwind CSS
-- `src/main.tsx`: default theme
-
 You have access to the whole code source if you need further customization. The provided code is only example for you to start your project. The sky is the limit 🚀.
 
----
 
