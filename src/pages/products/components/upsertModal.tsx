@@ -2,7 +2,6 @@ import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import {
   Dialog,
-  DialogTrigger,
   DialogContent,
   DialogHeader,
   DialogFooter,
@@ -13,13 +12,20 @@ import { useModalStore } from '@/hooks';
 import { Button, Input, ErrorMessage } from '@/components/ui';
 import { createProductSchema } from '@/features/products/schemas';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { ListPlus } from 'lucide-react';
+import { InputForm } from '@/components/ui/inputForm';
+import ImagePicker from '@/components/ui/imagePicker';
 
 type ProductFormInputs = {
-  name: string;
-  sku: string;
-  price: number;
-  description: string;
+  productName: string;
+  productImageDetail: File[];
+  descriptionProduct: string;
+  price: string;
+  brandId: string;
+  thumbnail: string | File;
+  size: string;
+  type: string;
+  quantity: string;
+  status: string;
 };
 
 const UpsertProductModal: React.FC = () => {
@@ -31,10 +37,16 @@ const UpsertProductModal: React.FC = () => {
   } = useForm<ProductFormInputs>({
     resolver: yupResolver(createProductSchema),
     defaultValues: {
-      name: '',
-      sku: '',
-      price: 0,
-      description: '',
+      productName: '',
+      productImageDetail: [],
+      descriptionProduct: '',
+      price: '',
+      brandId: '',
+      thumbnail: '',
+      size: '',
+      type: '',
+      quantity: '',
+      status: '',
     },
   });
   const isOpen = useModalStore((state) => state.isOpen);
@@ -43,18 +55,17 @@ const UpsertProductModal: React.FC = () => {
 
   const onSubmit = (data: ProductFormInputs) => {
     console.log(data);
-    // Handle form submission logic here
     reset();
     close();
   };
 
+  const onOpenChange = () => {
+    if (isOpen) return close();
+    open();
+  };
+
   return (
-    <Dialog open={isOpen} onOpenChange={isOpen ? close : open}>
-      <DialogTrigger asChild>
-        <Button onClick={open}>
-          <ListPlus className="mr-2 h-4 w-4" /> Add New Product
-        </Button>
-      </DialogTrigger>
+    <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Create Product</DialogTitle>
@@ -63,53 +74,115 @@ const UpsertProductModal: React.FC = () => {
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className='grid gap-4'>
-            <Controller
-              name="name"
-              control={control}
-              rules={{ required: 'Product name is required' }}
-              render={({ field }) => (
-                <Input {...field} placeholder="Product Name" />
+          <div className="grid grid-cols-3 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Thumbnail
+              </label>
+              <ImagePicker control={control} name="thumbnail" />
+            </div>
+           
+            {errors.thumbnail && (
+              <ErrorMessage message={errors.thumbnail.message as string} />
+            )}
+            <div>
+              <Controller
+                name="productName"
+                control={control}
+                rules={{ required: 'Product name is required' }}
+                render={({ field }) => (
+                  <InputForm {...field} placeholder="Product Name" />
+                )}
+              />
+              {errors.productName && (
+                <ErrorMessage message={errors.productName.message as string} />
               )}
-            />
-            {errors.name && (
-              <ErrorMessage message={errors.name.message as string} />
-            )}
-            <Controller
-              name="sku"
-              control={control}
-              rules={{ required: 'SKU is required' }}
-              render={({ field }) => <Input {...field} placeholder="SKU" />}
-            />
-            {errors.sku && (
-              <ErrorMessage message={errors.sku.message as string} />
-            )}
-            <Controller
-              name="price"
-              control={control}
-              rules={{ required: 'Price is required' }}
-              render={({ field }) => (
-                <Input {...field} type="number" placeholder="Price" />
+              <Controller
+                name="price"
+                control={control}
+                rules={{ required: 'Price is required' }}
+                render={({ field }) => (
+                  <InputForm {...field} type="number" placeholder="Price" />
+                )}
+              />
+              {errors.price && (
+                <ErrorMessage message={errors.price.message as string} />
               )}
-            />
-            {errors.price && (
-              <ErrorMessage message={errors.price.message as string} />
-            )}
-            <Controller
-              name="description"
-              control={control}
-              rules={{ required: 'Description is required' }}
-              render={({ field }) => (
-                <Input {...field} placeholder="Description" />
+              <Controller
+                name="descriptionProduct"
+                control={control}
+                rules={{ required: 'Description is required' }}
+                render={({ field }) => (
+                  <InputForm {...field} placeholder="Description" />
+                )}
+              />
+              {errors.descriptionProduct && (
+                <ErrorMessage
+                  message={errors.descriptionProduct.message as string}
+                />
               )}
-            />
-            {errors.description && (
-              <ErrorMessage message={errors.description.message as string} />
-            )}
-            <DialogFooter>
-              <Button type="submit">Submit</Button>
-            </DialogFooter>
+            </div>
+            <div>
+              <Controller
+                name="type"
+                control={control}
+                rules={{ required: 'Type is required' }}
+                render={({ field }) => (
+                  <InputForm {...field} placeholder="Type" />
+                )}
+              />
+              {errors.type && (
+                <ErrorMessage message={errors.type.message as string} />
+              )}
+              <Controller
+                name="brandId"
+                control={control}
+                rules={{ required: 'Brand ID is required' }}
+                render={({ field }) => (
+                  <InputForm {...field} placeholder="Brand ID" />
+                )}
+              />
+              {errors.brandId && (
+                <ErrorMessage message={errors.brandId.message as string} />
+              )}
+              <Controller
+                name="size"
+                control={control}
+                rules={{ required: 'Size is required' }}
+                render={({ field }) => (
+                  <InputForm {...field} placeholder="Size" />
+                )}
+              />
+              {errors.size && (
+                <ErrorMessage message={errors.size.message as string} />
+              )}
+              <Controller
+                name="quantity"
+                control={control}
+                rules={{ required: 'Quantity is required' }}
+                render={({ field }) => (
+                  <InputForm {...field} type="number" placeholder="Quantity" />
+                )}
+              />
+              {errors.quantity && (
+                <ErrorMessage message={errors.quantity.message as string} />
+              )}
+              <Controller
+                name="status"
+                control={control}
+                rules={{ required: 'Status is required' }}
+                render={({ field }) => (
+                  <InputForm {...field} placeholder="Status" />
+                )}
+              />
+              {errors.status && (
+                <ErrorMessage message={errors.status.message as string} />
+              )}
+            </div>
           </div>
+          <DialogFooter>
+            <Button type="submit">Submit</Button>
+          </DialogFooter>
         </form>
       </DialogContent>
     </Dialog>

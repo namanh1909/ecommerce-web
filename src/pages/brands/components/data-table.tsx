@@ -101,7 +101,7 @@ const DataTable = <TData, TValue>({
                       {column.id}
                     </DropdownMenuCheckboxItem>
                   );
-                })}
+                })}a
             </DropdownMenuContent>
           </DropdownMenu>
         </div>

@@ -5,13 +5,11 @@ import { Controller, Control } from 'react-hook-form';
 type ImagePickerProps = {
   control: Control<any>;
   name: string;
-  handleChange: (file: File) => void;
 };
 
 const ImagePicker: React.FC<ImagePickerProps> = ({
   control,
   name,
-  handleChange,
 }) => {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -21,7 +19,6 @@ const ImagePicker: React.FC<ImagePickerProps> = ({
 
   const handleClearImage = (onChange: (value: any) => void) => {
     onChange(null);
-    handleChange(null as any);
   };
 
   return (
@@ -42,9 +39,7 @@ const ImagePicker: React.FC<ImagePickerProps> = ({
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               const file = event.target.files?.[0];
               if (file) {
-                console.log(file);
                 onChange(file);
-                handleChange(file);
               }
             }}
             ref={fileInputRef}
@@ -55,7 +50,9 @@ const ImagePicker: React.FC<ImagePickerProps> = ({
               <img
                 onClick={handleIconClick}
                 src={
-                  typeof value === 'string' ? `http://localhost:8090/${value}` : URL.createObjectURL(value)
+                  typeof value === 'string'
+                    ? `http://localhost:8090/${value}`
+                    : URL.createObjectURL(value)
                 }
                 alt="Preview"
                 className="w-full h-full object-cover"

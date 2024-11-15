@@ -90,10 +90,6 @@ const UpsertProductModal: React.FC = () => {
     open();
   };
 
-  const handleChange = (file: File) => {
-
-  }
-
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogContent>
@@ -109,7 +105,7 @@ const UpsertProductModal: React.FC = () => {
         </DialogHeader>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="flex justify-center mb-4">
-            <ImagePicker control={control} name="brandImage" handleChange={handleChange} />
+            <ImagePicker control={control} name="brandImage"  />
           </div>
           <div className="grid gap-4">
             <Controller

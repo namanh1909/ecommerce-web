@@ -1,11 +1,13 @@
 export type Product = {
-    id: string;
-    thumbnail: string;
-    name: string;
-    type: string;
-    sku: string;
-    qty: number;
-    status: string;
-    description: string;
-    price: number;
-  };
+  Id?: string | null;
+  productName: string;
+  productImageDetail: string[];
+  descriptionProduct: string;
+  price: string;
+  brandId: string;
+  thumbnail: string;
+  size: string;
+  type: string;
+  quantity: string;
+  status: string;
+}

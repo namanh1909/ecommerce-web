@@ -1,8 +1,14 @@
-import * as yup from "yup";
+import * as yup from 'yup';
 
 export const createProductSchema = yup.object().shape({
-  name: yup.string().required("Product name is required"),
-  sku: yup.string().required("SKU is required"),
-  price: yup.number().positive("Price must be a positive number").required("Price is required"),
-  description: yup.string().required("Description is required"),
+  productName: yup.string().required(),
+  productImageDetail: yup.array().of(yup.mixed<File>().required()).required(),
+  descriptionProduct: yup.string().required(),
+  price: yup.string().required(),
+  brandId: yup.string().required(),
+  thumbnail: yup.mixed<string | File>().required(),
+  size: yup.string().required(),
+  type: yup.string().required(),
+  quantity: yup.string().required(),
+  status: yup.string().required(),
 });

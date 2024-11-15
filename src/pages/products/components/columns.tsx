@@ -17,7 +17,6 @@ import { Product } from '@/features/products/services/types';
 
 // This type is used to define the shape of our data.
 
-
 export const columns: ColumnDef<Product>[] = [
   {
     id: 'select',
@@ -59,7 +58,7 @@ export const columns: ColumnDef<Product>[] = [
     },
   },
   {
-    accessorKey: 'name',
+    accessorKey: 'productName',
     header: 'Product Name',
   },
   {
@@ -71,7 +70,7 @@ export const columns: ColumnDef<Product>[] = [
     header: 'SKU',
   },
   {
-    accessorKey: 'qty',
+    accessorKey: 'quantity',
     header: 'Quantity',
   },
   {
@@ -93,15 +92,13 @@ export const columns: ColumnDef<Product>[] = [
     },
   },
   {
-    accessorKey: 'description',
-    // header: 'Short Description',
+    accessorKey: 'descriptionProduct',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Short Description" />
     ),
   },
   {
     accessorKey: 'price',
-    //header: () => <div className="text-right">Price</div>,
     header: ({ column }) => (
       <DataTableColumnHeader
         className="justify-end"
@@ -118,6 +115,10 @@ export const columns: ColumnDef<Product>[] = [
 
       return <div className="text-right font-medium">{formatted}</div>;
     },
+  },
+  {
+    accessorKey: 'brandId',
+    header: 'Brand ID',
   },
   {
     id: 'actions',
@@ -141,12 +142,12 @@ export const columns: ColumnDef<Product>[] = [
               Delete
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem
+            {/* <DropdownMenuItem
               className="cursor-pointer"
-              onClick={() => navigator.clipboard.writeText(product.id)}
+              onClick={() => navigator.clipboard.writeText(product?.Id)}
             >
               Copy Product ID
-            </DropdownMenuItem>
+            </DropdownMenuItem> */}
           </DropdownMenuContent>
         </DropdownMenu>
       );
